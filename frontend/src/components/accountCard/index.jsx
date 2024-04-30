@@ -7,7 +7,6 @@ library.add(faChevronRight, faClose);
 
 export default function AccountCard(props) {
     const {account, isHomeProfile} = props
-    console.log(isHomeProfile)
     if (isHomeProfile) {
         return (
             <Link className="account" to={"/profile/" + account.accountId}>

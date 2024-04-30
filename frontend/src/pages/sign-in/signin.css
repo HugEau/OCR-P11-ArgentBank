@@ -6,9 +6,25 @@
     font-size: 1.1rem;
     font-weight: bold;
     margin-top: 1rem;
-    border-color: #00bc77;
     background-color: #00bc77;
     color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .sign-up-button {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    background-color: #00764b;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
   }
   
   .sign-in-content {
@@ -46,4 +62,40 @@
   .input-wrapper input {
     padding: 5px;
     font-size: 1.2rem;
+  }
+
+  .signUpModal {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .signUpModalCtn {
+    background-color: white;
+    padding: 2rem;
+    width: 300px;
+  }
+
+  .signUpModalCtn h2 {
+    margin-bottom: 1rem;
+  }
+
+  .signUpModalForm {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    
+  }
+
+  .error {
+    color: rgb(255, 58, 58);
+    font-weight: bold;
   }

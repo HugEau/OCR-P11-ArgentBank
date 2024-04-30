@@ -4,10 +4,28 @@
     align-items: center;
     padding: 5px 20px;
   }
+
+  .main-nav-utility {
+    display: flex;
+    gap: 10px;
+  }
   
   .main-nav a {
+    display: flex;
+    align-items: center;
     font-weight: bold;
-    color: #2c3e50;
+    color:#42b983;
+    gap: 5px;
+  }
+
+  .main-nav a:hover {
+    text-decoration: none;
+    p {
+      text-decoration: underline;}
+  }
+
+  .main-nav .fa {
+    font-size: 25px;
   }
   
   .main-nav a.router-link-exact-active {

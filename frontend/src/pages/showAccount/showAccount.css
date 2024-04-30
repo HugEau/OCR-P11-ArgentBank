@@ -89,6 +89,7 @@
 summary {
     display: flex;
     justify-content: center;
+    cursor: pointer;
 }
 
 .table-row-body {

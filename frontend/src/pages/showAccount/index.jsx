@@ -66,6 +66,7 @@ export default function ShowAccount() {
                                 <div className="tableTransactionInfos">
                                     <p className="tableColumn1">Note</p>
                                     <input type="text" className="tableColumn2" value={transaction.note}></input>
+                                    <FontAwesomeIcon icon={faPen} />
                                 </div>
                             </div>
                         </details>
