@@ -26,7 +26,15 @@ export default function Header() {
     }
   }
 
-  if (useSelector(state => state.connected) === true){
+  function isConnected() {
+    if (token === undefined || token === null || token === "") {
+      return false
+    } else {
+      return true
+    }
+  }
+
+  if (isConnected()) {
     if(data === undefined || data === null) {
       getUserInfo()
     }

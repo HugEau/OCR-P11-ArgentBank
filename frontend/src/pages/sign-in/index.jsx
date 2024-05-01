@@ -2,16 +2,15 @@ import './signin.css'
 
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { setConnexionStatus, setLoginError } from '../../store';
 import { setConnexionToken } from '../../store';
 import { useState } from 'react';
 
 export default function SignIn() {
     const dispatch = useDispatch();
-    const connected = useSelector(state => state.connected);
     const token = useSelector(state => state.token);
+
     const [signUpModal, setSignUpModal] = useState(false);
-    const loginError = useSelector(state => state.loginError);
+    const [loginError, setLoginError] = useState(null);
 
     async function loginHandleSubmit(e) {
         e.preventDefault();
@@ -27,14 +26,13 @@ export default function SignIn() {
             if (response.status === 200) {
                 let token = data.body.token
                 dispatch(setConnexionToken(token))
-                dispatch(setConnexionStatus(true))
                 if (loginError !== null) {
-                    dispatch(setLoginError(null))
+                    setLoginError(null)
                 }
             } else if (response.status !== 500) {
-                dispatch(setLoginError("Invalid email or password"))
+                setLoginError("Invalid email or password")
             } else {
-                dispatch(setLoginError("Internal Error, please contact administrator"))
+                setLoginError("Internal Error, please contact administrator")
             }
         } catch (error) {
             console.error(error, "Error logging in");
@@ -65,7 +63,7 @@ export default function SignIn() {
         console.log("Submit")
     }
 
-    if (connected && token !== "") {
+    if (token !== null) {
         window.location.href = '/profile'
     } else {
         return (

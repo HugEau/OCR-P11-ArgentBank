@@ -9,10 +9,12 @@ import { useState, useEffect } from 'react';
 export default function Profile() {
     const accounts = accountsList.accounts
     const dispatch = useDispatch();
-    const [modifyAccountAsked, setModifyAccountAsked] = useState(false);
-    const [userName, setUserName] = useState('');
     let data = useSelector(state => state.userData);
     let token = useSelector(state => state.token);
+    
+    const [modifyAccountAsked, setModifyAccountAsked] = useState(false);
+    const [userName, setUserName] = useState('');
+
 
     useEffect(() => {
         setUserName(data.userName);
