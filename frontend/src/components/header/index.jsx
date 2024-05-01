@@ -20,7 +20,13 @@ export default function Header() {
         }
       })
       let data = await userInfo.json()
-      dispatch(setUserData(data.body))
+      if (data.status === 200) {
+        dispatch(setUserData(data.body))
+      } else {
+        console.error("Error getting user info")
+        dispatch(signOut())
+      }
+      
     } catch (error) {
       console.error(error, "Error getting user info");
     }

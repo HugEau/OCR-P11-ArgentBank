@@ -45,7 +45,12 @@ export default function SignIn() {
         try {
             let response = await fetch('http://localhost:3001/api/v1/user/signup', {
                 method: 'POST',
-                body: JSON.stringify({ "email": e.target[0].value, "password": e.target[1].value, "firstName": e.target[2].value, "lastName": e.target[3].value, "userName": e.target[4].value }),
+                body: JSON.stringify({ 
+                    "email": e.target[0].value, 
+                    "password": e.target[1].value, 
+                    "firstName": e.target[2].value, 
+                    "lastName": e.target[3].value, 
+                    "userName": e.target[4].value }),
                 headers: {
                     'Content-Type': 'application/json',
                 },
