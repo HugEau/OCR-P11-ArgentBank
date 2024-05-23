@@ -23,20 +23,6 @@ export const signOut = () => {
     }
 }
 
-export const setSignUpModal = (e) => {
-    return {
-        type: "signUpModal",
-        payload: e
-    }
-}
-
-export const setSuccess = (e) => {
-    return {
-        type: "success",
-        payload: e
-    }
-}
-
 export const store = createStore(reducer);
 
 store.subscribe(() => {

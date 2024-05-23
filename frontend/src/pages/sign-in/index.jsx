@@ -97,7 +97,12 @@ export default function SignIn() {
 
                         <button type='submit' className="sign-in-button">Sign In</button>
                     </form>
-                    <button className="sign-up-button" onClick={() => setSignUpModal(true)}>Sign Up</button>
+                    <button className="sign-up-button" onClick={() => 
+                        {
+                            setSignUpModal(true)
+                            setLoginError(null)
+                        }
+                        }>Sign Up</button>
                 </section>
                 {signUpModal ? (
                     <div className='signUpModal'>
