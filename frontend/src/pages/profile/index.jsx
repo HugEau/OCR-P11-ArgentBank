@@ -1,7 +1,7 @@
 import './profile.css';
 import AccountCard from '../../components/accountCard';
 import accountsList from '../../assets/datas/accounts';
-import { setUserData } from '../../redux/store';
+import { setUserData } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
