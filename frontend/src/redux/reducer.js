@@ -1,30 +1,9 @@
-import { createStore } from "redux";
-
 const initialState = {
     token: null,
-    userData: null
-}
-
-export const setConnexionToken = (e) => {
-    console.log(e, "connexionToken")
-    return {
-        type: "connexionToken",
-        payload: e
-    }
-}
-
-export const setUserData = (e) => {
-    return {
-        type: "userData",
-        payload: e
-    }
-}
-
-export const signOut = () => {
-    return {
-        type: "signOut",
-        payload: null
-    }
+    userData: null,
+    signUpModal: false,
+    loginError: null,
+    success: null
 }
 
 const storedState = sessionStorage.getItem("state");
@@ -32,6 +11,21 @@ const persistedState = storedState ? JSON.parse(storedState) : initialState;
 
 const reducer = (state = persistedState, action) => {
     switch (action.type) {
+        case "signUpModal":
+            return { 
+                ...state,
+                signUpModal: action.payload
+            }
+        case "loginError":
+            return { 
+                ...state,
+                loginError: action.payload
+            }
+        case "success":
+            return { 
+                ...state,
+                success: action.payload
+            }
         case "connexionToken":
             return { 
                 ...state,
@@ -49,8 +43,4 @@ const reducer = (state = persistedState, action) => {
     }
 }
 
-export const store = createStore(reducer);
-
-store.subscribe(() => {
-    sessionStorage.setItem("state", JSON.stringify(store.getState()));
-});
+export default reducer;

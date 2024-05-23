@@ -2,8 +2,8 @@ import './header.css'
 import logo from '../../assets/imgs/argentBankLogo.webp'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { setUserData } from '../../store';
-import { signOut } from '../../store';
+import { setUserData } from '../../redux/store';
+import { signOut } from '../../redux/store';
 
 export default function Header() {
   const dispatch = useDispatch();

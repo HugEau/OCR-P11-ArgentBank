@@ -2,7 +2,7 @@ import './signin.css'
 
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { setConnexionToken } from '../../store';
+import { setConnexionToken } from '../../redux/store';
 import { useState } from 'react';
 
 export default function SignIn() {
