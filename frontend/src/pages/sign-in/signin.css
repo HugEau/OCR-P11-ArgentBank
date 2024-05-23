@@ -99,3 +99,9 @@
     color: rgb(255, 58, 58);
     font-weight: bold;
   }
+
+  .success {
+    color: rgb(0, 255, 0);
+    cursor: pointer;
+    font-weight: bold;
+  }

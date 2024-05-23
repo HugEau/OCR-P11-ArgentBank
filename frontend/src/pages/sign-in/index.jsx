@@ -11,6 +11,7 @@ export default function SignIn() {
 
     const [signUpModal, setSignUpModal] = useState(false);
     const [loginError, setLoginError] = useState(null);
+    const [success, setSuccess] = useState(null);
 
     async function loginHandleSubmit(e) {
         e.preventDefault();
@@ -57,9 +58,11 @@ export default function SignIn() {
             })
             console.log(response, "response")
             if (response.status === 200) {
+                setSuccess("Compte créé avec succès !")
                 dispatch(setSignUpModal(false))
                 console.log("User created")
             } else {
+                setSuccess("Erreur lors de la création du compte")
                 console.log("User not created")
             }
         } catch (error) {
@@ -76,6 +79,7 @@ export default function SignIn() {
                 <section className="sign-in-content">
                     <i className="fa fa-user-circle sign-in-icon"/>
                     <h1>Sign In</h1>
+                    {success !== null ? <p className='success' onClick={() => setSuccess(null)}>{success}</p> : null}
                     <form onSubmit={(e) => loginHandleSubmit(e)}>
                         <div className="input-wrapper">
                             <label htmlFor="email">Email</label>

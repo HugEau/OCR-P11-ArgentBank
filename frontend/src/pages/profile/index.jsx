@@ -12,16 +12,20 @@ export default function Profile() {
     let data = useSelector(state => state.userData);
     let token = useSelector(state => state.token);
     
+    
     const [modifyAccountAsked, setModifyAccountAsked] = useState(false);
     const [userName, setUserName] = useState('');
 
-
     useEffect(() => {
-        setUserName(data.userName);
-    }, [data.userName]);
+        if (data === undefined || data === null) {
+            window.location.href = '/login';
+        } else {
+            setUserName(data.userName);
+        }
+    }, [data]);
 
     function handleChange(e) {
-        setUserName(e.target.value)
+        setUserName(e.target.value);
     }
 
     async function handleSubmit(e) {
