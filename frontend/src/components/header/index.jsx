@@ -2,36 +2,14 @@ import './header.css'
 import logo from '../../assets/imgs/argentBankLogo.webp'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { setUserData } from '../../redux/actions';
-import { signOut } from '../../redux/actions';
+import { setUserData } from '../../redux/reducer';
+import { signOut } from '../../redux/reducer';
+import { getUserInfo } from '../../redux/actions';
 
 export default function Header() {
   const dispatch = useDispatch();
   let token = useSelector(state => state.token);
   let data = useSelector(state => state.userData);
-
-  async function getUserInfo() {
-    try {
-      let userInfo = await fetch('http://localhost:3001/api/v1/user/profile', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      let data = await userInfo.json()
-      if (data.status === 200) {
-        dispatch(setUserData(data.body))
-      } else {
-        console.error("Error getting user info")
-        dispatch(signOut())
-      }
-      
-    } catch (error) {
-      console.error(error, "Error getting user info");
-    }
-  }
-
   function isConnected() {
     if (token === undefined || token === null || token === "") {
       return false
@@ -40,10 +18,17 @@ export default function Header() {
     }
   }
 
-  if (isConnected()) {
-    if(data === undefined || data === null) {
-      getUserInfo()
+  async function fetchData() {
+    if(data === undefined || data === null || data === "") {
+      let dataInfo = await getUserInfo(token)
+      if (dataInfo !== null || dataInfo !== undefined) {
+        dispatch(setUserData(dataInfo))
+      }
     }
+  }
+
+  if (isConnected()) {
+    fetchData()
     return (
       <nav className="main-nav">
         <a className="main-nav-logo" href="/profile">

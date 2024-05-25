@@ -2,7 +2,9 @@ import './signin.css'
 
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { setConnexionToken } from '../../redux/actions';
+import { setConnexionToken } from '../../redux/reducer';
+import { loginHandleSubmit } from '../../redux/actions';
+import { signUpHandler } from '../../redux/actions';
 import { useState } from 'react';
 
 export default function SignIn() {
@@ -13,63 +15,6 @@ export default function SignIn() {
     const [loginError, setLoginError] = useState(null);
     const [success, setSuccess] = useState(null);
 
-    async function loginHandleSubmit(e) {
-        e.preventDefault();
-        try {
-            let response = await fetch('http://localhost:3001/api/v1/user/login', {
-                method: 'POST',
-                body: JSON.stringify({ "email": e.target.email.value, "password": e.target.password.value }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-            let data = await response.json()
-            if (response.status === 200) {
-                let token = data.body.token
-                dispatch(setConnexionToken(token))
-                if (loginError !== null) {
-                    setLoginError(null)
-                }
-            } else if (response.status !== 500) {
-                setLoginError("Invalid email or password")
-            } else {
-                setLoginError("Internal Error, please contact administrator")
-            }
-        } catch (error) {
-            console.error(error, "Error logging in");
-        }
-        console.log("Submit")
-    }
-
-    async function signUpHandler(e) {
-        e.preventDefault();
-        try {
-            let response = await fetch('http://localhost:3001/api/v1/user/signup', {
-                method: 'POST',
-                body: JSON.stringify({ 
-                    "email": e.target[0].value, 
-                    "password": e.target[1].value, 
-                    "firstName": e.target[2].value, 
-                    "lastName": e.target[3].value, 
-                    "userName": e.target[4].value }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-            console.log(response, "response")
-            if (response.status === 200) {
-                setSuccess("Compte créé avec succès !")
-                dispatch(setSignUpModal(false))
-                console.log("User created")
-            } else {
-                setSuccess("Erreur lors de la création du compte")
-                console.log("User not created")
-            }
-        } catch (error) {
-            console.error(error, "Error signing up");
-        }
-        console.log("Submit")
-    }
 
     if (token !== null) {
         window.location.href = '/profile'
@@ -80,7 +25,22 @@ export default function SignIn() {
                     <i className="fa fa-user-circle sign-in-icon"/>
                     <h1>Sign In</h1>
                     {success !== null ? <p className='success' onClick={() => setSuccess(null)}>{success}</p> : null}
-                    <form onSubmit={(e) => loginHandleSubmit(e)}>
+                    <form onSubmit={async (e) => {
+                        let login = await loginHandleSubmit(e)
+                        console.log(login, "login")
+                        if (login !== 400 || login !== 500) {
+                            dispatch(setConnexionToken(login))
+                            if (loginError !== null) {
+                                setLoginError(null)
+                            }
+                        } else {
+                            if (login === 400) {
+                                setLoginError("Invalid email or password")
+                            } else if (login === 500) {
+                                setLoginError("Internal Error, please contact administrator")
+                            }
+                        }
+                    }}>
                         <div className="input-wrapper">
                             <label htmlFor="email">Email</label>
                             <input type="email" id="email" required/>
@@ -108,7 +68,17 @@ export default function SignIn() {
                     <div className='signUpModal'>
                         <div className='signUpModalCtn'>
                             <h2>Create your account</h2>
-                            <form className='signUpModalForm input-wrapper' onSubmit={(e) => signUpHandler(e)}>
+                            <form className='signUpModalForm input-wrapper' onSubmit={async (e) => {
+                                let signUp = await signUpHandler(e)
+                                if (signUp !== "Compte créé avec succès !") {
+                                    setSuccess(signUp)
+                                    console.log("User not created")
+                                } else {
+                                    setSuccess(signUp)
+                                    setSignUpModal(false)
+                                    console.log("User created")
+                                }
+                            }}>
                                 <label htmlFor="email">Email</label>
                                 <input type="email" placeholder={"eMail"} required/>
                                 <label htmlFor="password">Password</label>

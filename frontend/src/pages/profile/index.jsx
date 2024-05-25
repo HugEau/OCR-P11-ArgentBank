@@ -1,7 +1,7 @@
 import './profile.css';
 import AccountCard from '../../components/accountCard';
 import accountsList from '../../assets/datas/accounts';
-import { setUserData } from '../../redux/actions';
+import { setUserData } from '../../redux/reducer';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
@@ -69,7 +69,15 @@ export default function Profile() {
                     ) : (
                         <>
                             <h1>Edit your name</h1>
-                            <form className="modifyAccountForm" onSubmit={(e) => handleSubmit(e)}>
+                            <form className="modifyAccountForm" onSubmit={(e) => {
+                                let submit = handleSubmit(e, token)
+                                if (submit !== null || submit !== undefined || submit !== 500) {
+                                    setModifyAccountAsked(false)
+                                    dispatch(setUserData(submit))
+                                } else {
+                                    console.error("Error modifying username")
+                                }
+                            }}>
                                 <div className='formGroup'>
                                     <label htmlFor="username">User Name :</label>
                                     <input type="text" name="username" placeholder={"username"} value={userName} onChange={handleChange} />
